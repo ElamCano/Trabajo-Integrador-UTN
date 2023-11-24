@@ -12,7 +12,7 @@ Puedes acceder al sitio deployado en el siguiente: [Link](https://to-do-list-utn
 
 ## Tecnologías utilizadas
 
-**Client**: ViteJS, ReactJS, Pure CSS, Bootstrap, TailWindCSS
+**Client**: ViteJS, ReactJS, Pure CSS, Bootstrap, TailwindCSS
 
 ---
 
