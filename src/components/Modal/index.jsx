@@ -6,16 +6,37 @@ import {
   DialogBody,
   DialogFooter,
   Input,
-  Textarea,
   Typography,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import ButtonAdd from "../ButtonAdd";
 
 export default function Modal() {
   const [open, setOpen] = React.useState(false);
-
+  const [task, setTask] = React.useState({
+    fecha: "",
+    tarea_principal: "",
+    sub_tarea1: "",
+    sub_tarea2: "",
+    sub_tarea3: "",
+  });
   const handleOpen = () => setOpen(!open);
+  const handleChange = (e) => {
+    setTask({
+      ...task,
+      [e.target.name]: e.target.value,
+    });
+  };
 
+  const handleChangeOptions = (e) => {
+    if (e === "Hoy") setTask({ ...task, fecha: e });
+    else setTask({ ...task, fecha: e });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <>
       <div onClick={handleOpen} className="flex justify-center mt-3">
@@ -47,11 +68,44 @@ export default function Modal() {
             Puedes crear una tarea principal, añadir subtareas y fechas.
           </Typography>
           <div className="grid gap-2 -mt-6">
-            <Input label="Fecha" />
-            <Input label="Tarea Principal" />
-            <Input label="SubTarea 1" />
-            <Input label="SubTarea 2" />
-            <Input label="SubTarea 3" />
+            <Select
+              label="Seleccione Fecha"
+              value={task.fecha}
+              onChange={handleChangeOptions}
+            >
+              <Option value="Hoy">Hoy</Option>
+              <Option value="Mañana">Mañana</Option>
+              <Input
+                label="Fecha"
+                name="fecha"
+                value={task.fecha}
+                onChange={handleChange}
+              />
+            </Select>
+            <Input
+              label="Tarea Principal"
+              name="tarea_principal"
+              value={task.tarea_principal}
+              onChange={handleChange}
+            />
+            <Input
+              label="SubTarea 1"
+              name="sub_tarea1"
+              value={task.sub_tarea1}
+              onChange={handleChange}
+            />
+            <Input
+              label="SubTarea 2"
+              name="sub_tarea2"
+              value={task.sub_tarea2}
+              onChange={handleChange}
+            />
+            <Input
+              label="SubTarea 3"
+              name="sub_tarea3"
+              value={task.sub_tarea3}
+              onChange={handleChange}
+            />
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2 -mt-6">
@@ -62,13 +116,16 @@ export default function Modal() {
             onClick={handleOpen}
           >
             cancelar
-          </Button>
-          <button
-            className="px-4 py-2 rounded-lg text-[#f5f5f5] bg-[#4ac2c3] hover:bg-[#f5f5f5] hover:border hover:border-[#4ac2c3] hover:text-[#4ac2c3] transition duration-500"
-            onClick={handleOpen}
-          >
-            crear tarea
-          </button>
+          </Button>{" "}
+          <form onSubmit={handleSubmit}>
+            <button
+              type="sumbit"
+              className="px-4 py-2 rounded-lg text-[#f5f5f5] bg-[#4ac2c3] hover:bg-[#f5f5f5] hover:border hover:border-[#4ac2c3] hover:text-[#4ac2c3] transition duration-500"
+              onClick={handleOpen}
+            >
+              crear tarea
+            </button>{" "}
+          </form>
         </DialogFooter>
       </Dialog>
     </>
