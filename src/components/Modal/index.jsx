@@ -12,14 +12,14 @@ import {
 } from "@material-tailwind/react";
 import ButtonAdd from "../ButtonAdd";
 
-export default function Modal() {
+export default function Modal({ addTask }) {
   const [open, setOpen] = React.useState(false);
   const [task, setTask] = React.useState({
     fecha: "",
     tarea_principal: "",
-    sub_tarea1: "",
-    sub_tarea2: "",
-    sub_tarea3: "",
+    tarea1: "",
+    tarea2: "",
+    tarea3: "",
   });
   const handleOpen = () => setOpen(!open);
   const handleChange = (e) => {
@@ -30,12 +30,19 @@ export default function Modal() {
   };
 
   const handleChangeOptions = (e) => {
-    if (e === "Hoy") setTask({ ...task, fecha: e });
-    else setTask({ ...task, fecha: e });
+    setTask({ ...task, fecha: e });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    addTask(task);
+    setTask({
+      fecha: "",
+      tarea_principal: "",
+      tarea1: "",
+      tarea2: "",
+      tarea3: "",
+    });
   };
   return (
     <>
@@ -70,17 +77,16 @@ export default function Modal() {
           <div className="grid gap-2 -mt-6">
             <Select
               label="Seleccione Fecha"
+              name="fecha"
               value={task.fecha}
               onChange={handleChangeOptions}
             >
-              <Option value="Hoy">Hoy</Option>
-              <Option value="Mañana">Mañana</Option>
-              <Input
-                label="Fecha"
-                name="fecha"
-                value={task.fecha}
-                onChange={handleChange}
-              />
+              <Option name="fecha" value="Hoy">
+                Hoy
+              </Option>
+              <Option name="fecha" value="Mañana">
+                Mañana
+              </Option>
             </Select>
             <Input
               label="Tarea Principal"
@@ -90,20 +96,20 @@ export default function Modal() {
             />
             <Input
               label="SubTarea 1"
-              name="sub_tarea1"
-              value={task.sub_tarea1}
+              name="tarea1"
+              value={task.tarea1}
               onChange={handleChange}
             />
             <Input
               label="SubTarea 2"
-              name="sub_tarea2"
-              value={task.sub_tarea2}
+              name="tarea2"
+              value={task.tarea2}
               onChange={handleChange}
             />
             <Input
               label="SubTarea 3"
-              name="sub_tarea3"
-              value={task.sub_tarea3}
+              name="tarea3"
+              value={task.tarea3}
               onChange={handleChange}
             />
           </div>
@@ -116,7 +122,7 @@ export default function Modal() {
             onClick={handleOpen}
           >
             cancelar
-          </Button>{" "}
+          </Button>
           <form onSubmit={handleSubmit}>
             <button
               type="sumbit"
@@ -124,7 +130,7 @@ export default function Modal() {
               onClick={handleOpen}
             >
               crear tarea
-            </button>{" "}
+            </button>
           </form>
         </DialogFooter>
       </Dialog>
