@@ -46,21 +46,25 @@ function App() {
   return (
     <div className="bg-[#1c2628] min-h-screen w-full pb-24 md:pb-4">
       <Title addTask={addTask} />
-      {itemsToday.length && (
+      {itemsToday.length ? (
         <Tasks
           title={"Today"}
           taskItems={itemsToday}
           removeTask={removeTask}
           colorCheckbox={0}
         />
+      ) : (
+        <></>
       )}
-      {itemsTomorrow.length && (
+      {itemsTomorrow.length ? (
         <Tasks
           title={"Tomorrow"}
           taskItems={itemsTomorrow}
           removeTask={removeTask}
           colorCheckbox={2}
         />
+      ) : (
+        <></>
       )}
       {alertaCreada && (
         <Alert color="green" className="absolute bottom-0 w-full md:w-80">
