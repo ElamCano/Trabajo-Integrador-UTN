@@ -69,7 +69,7 @@ export default function Modal({ addTask }) {
     <>
       <div
         onClick={handleOpen}
-        className="fixed bottom-0 left-0 flex justify-center h-20 w-full md:w-16 bg-[#1c2628] md:relative md:flex md:justify-center md:mt-3"
+        className="fixed bottom-0 left-0 flex justify-center h-20 w-full md:w-16 bg-[#1c2628] md:relative md:flex md:justify-center md:mt-[20px] lg:mt-4"
       >
         <ButtonAdd />
       </div>
