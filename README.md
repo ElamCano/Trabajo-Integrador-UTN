@@ -1,6 +1,6 @@
 # Trabajo Integrador Final - ToDo List
 
-<!-- ![cover](/public/) -->
+![cover](/public/cover.png)
 
 Puedes acceder al sitio deployado en el siguiente: [Link](https://to-do-list-utn.vercel.app/)
 

@@ -4,3 +4,11 @@
   --mainSubtitle: #918c93;
   --mainBtn: #4ac2c3;
 }
+.checkboxPrincipal{
+  width: 28px;
+  height: 28px;
+}
+.checkboxSubTask{
+  width: 24px;
+  height: 24px;
+}

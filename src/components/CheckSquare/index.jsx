@@ -1,5 +1,8 @@
-export default function CheckSquare() {
+export default function CheckSquare({ checked, color, size }) {
   return (
-    <div className="w-6 h-6 rounded bg-[#f5f5f5] border-2 border-[#4ac2c3] cursor-pointer"></div>
+    <div
+      className={`${size} rounded border-2 cursor-pointer`}
+      style={{ background: checked ? color : "#f5f5f5", borderColor: color }}
+    ></div>
   );
 }

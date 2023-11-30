@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -21,32 +21,56 @@ export default function Modal({ addTask }) {
     tarea2: "",
     tarea3: "",
   });
+  const [alertFecha, setAlertFecha] = useState(false);
+  const [alertPrincipal, setAlertPrincipal] = useState(false);
+
   const handleOpen = () => setOpen(!open);
+  const handleClose = () => {
+    if (task.fecha && task.tarea_principal.length >= 5) {
+      setOpen(false);
+    }
+  };
   const handleChange = (e) => {
     setTask({
       ...task,
       [e.target.name]: e.target.value,
     });
   };
-
   const handleChangeOptions = (e) => {
     setTask({ ...task, fecha: e });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTask(task);
-    setTask({
-      fecha: "",
-      tarea_principal: "",
-      tarea1: "",
-      tarea2: "",
-      tarea3: "",
-    });
+
+    if (!task.fecha) {
+      setAlertFecha(true);
+      setTimeout(() => {
+        setAlertFecha(false);
+      }, 2000);
+    } else if (task.tarea_principal.length < 5) {
+      console.log(12);
+      setAlertPrincipal(true);
+      setTimeout(() => {
+        setAlertPrincipal(false);
+      }, 2000);
+    } else {
+      addTask(task);
+      setTask({
+        fecha: "",
+        tarea_principal: "",
+        tarea1: "",
+        tarea2: "",
+        tarea3: "",
+      });
+    }
   };
   return (
     <>
-      <div onClick={handleOpen} className="flex justify-center mt-3">
+      <div
+        onClick={handleOpen}
+        className="fixed bottom-0 left-0 flex justify-center h-20 w-full md:w-16 bg-[#1c2628] md:relative md:flex md:justify-center md:mt-3"
+      >
         <ButtonAdd />
       </div>
       <Dialog open={open} size="xs" handler={handleOpen}>
@@ -81,19 +105,27 @@ export default function Modal({ addTask }) {
               value={task.fecha}
               onChange={handleChangeOptions}
             >
-              <Option name="fecha" value="Hoy">
-                Hoy
+              <Option name="fecha" value="Today">
+                Today
               </Option>
-              <Option name="fecha" value="Mañana">
-                Mañana
+              <Option name="fecha" value="Tomorrow">
+                Tomorrow
               </Option>
             </Select>
+            {alertFecha && (
+              <p className="text-red-300 text-xs ml-2">Elegir una fecha</p>
+            )}
             <Input
               label="Tarea Principal"
               name="tarea_principal"
               value={task.tarea_principal}
               onChange={handleChange}
             />
+            {alertPrincipal && (
+              <p className="text-red-300 text-xs ml-2">
+                Escribir una tarea con almenos 5 letras
+              </p>
+            )}
             <Input
               label="SubTarea 1"
               name="tarea1"
@@ -126,8 +158,10 @@ export default function Modal({ addTask }) {
           <form onSubmit={handleSubmit}>
             <button
               type="sumbit"
-              className="px-4 py-2 rounded-lg text-[#f5f5f5] bg-[#4ac2c3] hover:bg-[#f5f5f5] hover:border hover:border-[#4ac2c3] hover:text-[#4ac2c3] transition duration-500"
-              onClick={handleOpen}
+              className={`${
+                alertFecha || alertPrincipal ? "disabled:" : ""
+              } px-4 py-2 rounded-lg text-[#f5f5f5] bg-[#4ac2c3] hover:bg-[#f5f5f5] hover:border hover:border-[#4ac2c3] hover:text-[#4ac2c3] transition duration-500`}
+              onClick={handleClose}
             >
               crear tarea
             </button>
